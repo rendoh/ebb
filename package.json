@@ -5,6 +5,7 @@
   "description": "Ebb workspaces",
   "author": "Ryohei ENDO",
   "workspaces": [
-    "packages/api"
+    "packages/api",
+    "packages/frontend"
   ]
 }
