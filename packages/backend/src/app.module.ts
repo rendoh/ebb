@@ -11,7 +11,6 @@ import { PrismaClientExceptionFilter } from './prisma/prisma-client-exception.fi
   controllers: [AppController],
   providers: [
     AppService,
-    PrismaService,
     {
       provide: APP_GUARD,
       useClass: AuthGuard('bearer'),
