@@ -21,4 +21,20 @@ export class TasksService {
       },
     });
   }
+
+  public findAll(uid: string) {
+    return this.prisma.task.findMany({
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        createdAt: true,
+        updatedAt: true,
+        archived: true,
+      },
+      where: {
+        uid,
+      },
+    });
+  }
 }

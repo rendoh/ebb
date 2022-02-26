@@ -1,5 +1,6 @@
 import {
   Controller,
+  Get,
   Post,
   Body,
   Req,
@@ -17,5 +18,10 @@ export class TasksController {
     @Body() createTaskDto: CreateTaskDto,
   ) {
     return this.tasksService.create(req.user.uid, createTaskDto);
+  }
+
+  @Get()
+  findAll(@Req() req: AuthenticatedRequest) {
+    return this.tasksService.findAll(req.user.uid);
   }
 }
