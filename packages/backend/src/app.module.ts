@@ -18,7 +18,7 @@ import { PrismaClientExceptionFilter } from './prisma/prisma-client-exception.fi
     },
     {
       provide: APP_PIPE,
-      useFactory: () => new ValidationPipe({ whitelist: true }),
+      useValue: new ValidationPipe({ whitelist: true }),
     },
     {
       provide: APP_FILTER,
