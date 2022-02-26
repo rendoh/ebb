@@ -14,37 +14,37 @@ export class TasksService {
         content,
         uid,
       },
-      select: {
-        id: true,
-        title: true,
-        content: true,
-        createdAt: true,
-      },
     });
   }
 
   public findAll(uid: string) {
     return this.prisma.task.findMany({
-      select: {
-        id: true,
-        title: true,
-        content: true,
-        createdAt: true,
-        updatedAt: true,
-        archived: true,
-      },
       where: {
         uid,
       },
     });
   }
 
-  async update(id: string, updateTaskDto: UpdateTaskDto) {
+  public async findOne(id: string) {
+    return this.prisma.task.findUnique({
+      where: { id },
+    });
+  }
+
+  public async update(id: string, updateTaskDto: UpdateTaskDto) {
     return this.prisma.task.update({
       where: {
         id,
       },
       data: updateTaskDto,
+    });
+  }
+
+  public remove(id: string) {
+    return this.prisma.task.delete({
+      where: {
+        id,
+      },
     });
   }
 }

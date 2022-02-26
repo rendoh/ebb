@@ -5,8 +5,11 @@ import {
   Body,
   Patch,
   Param,
+  Delete,
   Req,
   UseGuards,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -19,7 +22,7 @@ export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Post()
-  create(
+  public async create(
     @Req() req: AuthenticatedRequest,
     @Body() createTaskDto: CreateTaskDto,
   ) {
@@ -27,13 +30,30 @@ export class TasksController {
   }
 
   @Get()
-  findAll(@Req() req: AuthenticatedRequest) {
+  public async findAll(@Req() req: AuthenticatedRequest) {
     return this.tasksService.findAll(req.user.uid);
+  }
+
+  @Get(':id')
+  @UseGuards(TaskPolicyGuard)
+  public async findOne(@Param('id') id: string) {
+    return this.tasksService.findOne(id);
   }
 
   @Patch(':id')
   @UseGuards(TaskPolicyGuard)
-  update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
+  public async update(
+    @Param('id') id: string,
+    @Body() updateTaskDto: UpdateTaskDto,
+  ) {
     return this.tasksService.update(id, updateTaskDto);
+  }
+
+  @Delete(':id')
+  @UseGuards(TaskPolicyGuard)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async remove(@Param('id') id: string) {
+    await this.tasksService.remove(id);
+    return null;
   }
 }
