@@ -1,16 +1,15 @@
 import { Strategy } from 'passport-http-bearer';
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { getAuth } from 'firebase-admin/auth';
+import { Injectable } from '@nestjs/common';
+import { AuthService } from '../auth.service';
 
 @Injectable()
 export class FirebaseStrategy extends PassportStrategy(Strategy) {
+  constructor(private authService: AuthService) {
+    super();
+  }
+
   async validate(token: string) {
-    try {
-      const decodedIdToken = await getAuth().verifyIdToken(token);
-      return decodedIdToken;
-    } catch (error) {
-      throw new UnauthorizedException(error);
-    }
+    return this.authService.validateToken(token);
   }
 }
