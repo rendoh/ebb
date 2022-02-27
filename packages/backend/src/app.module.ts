@@ -1,5 +1,4 @@
 import { Module, ValidationPipe } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { APP_FILTER, APP_GUARD, APP_PIPE } from '@nestjs/core';
@@ -9,7 +8,6 @@ import { PrismaClientExceptionFilter } from './prisma/prisma-client-exception.fi
 
 @Module({
   imports: [AuthModule, TasksModule],
-  controllers: [AppController],
   providers: [
     AppService,
     {
