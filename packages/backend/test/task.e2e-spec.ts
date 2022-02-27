@@ -16,7 +16,7 @@ describe('TaskController (e2e)', () => {
   });
 
   describe('GET: /tasks', () => {
-    it('認証前のユーザはアクセスできない', () => {
+    test('認証前のユーザはアクセスできない', () => {
       return request(app.getHttpServer()).get('/tasks').expect(401);
     });
   });
