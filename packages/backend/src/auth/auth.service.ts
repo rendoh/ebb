@@ -1,7 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import admin, { AppOptions } from 'firebase-admin';
-import { applicationDefault } from 'firebase-admin/app';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +16,7 @@ export class AuthService {
           projectId: GCLOUD_PROJECT,
         }
       : {
-          credential: applicationDefault(),
+          credential: admin.credential.applicationDefault(),
         };
     this.app = admin.initializeApp(options);
   }
