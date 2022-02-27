@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { AuthService } from '../auth.service';
 
 @Injectable()
-export class FirebaseStrategy extends PassportStrategy(Strategy) {
+export class BearerStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: AuthService) {
     super();
   }
