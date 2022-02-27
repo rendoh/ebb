@@ -10,5 +10,8 @@
   ],
   "devDependencies": {
     "firebase-tools": "^10.2.1"
+  },
+  "dependencies": {
+    "axios": "^0.26.0"
   }
 }
