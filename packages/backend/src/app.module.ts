@@ -5,9 +5,16 @@ import { APP_FILTER, APP_GUARD, APP_PIPE } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { TasksModule } from './tasks/tasks.module';
 import { PrismaClientExceptionFilter } from './prisma/prisma-client-exception.filter';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [AuthModule, TasksModule],
+  imports: [
+    AuthModule,
+    TasksModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+  ],
   providers: [
     AppService,
     {

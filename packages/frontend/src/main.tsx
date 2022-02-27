@@ -22,9 +22,18 @@ const firebaseConfig = {
 
 const app = firebase.initializeApp(firebaseConfig);
 
+if (process.env.NODE_ENV === 'development') {
+  app.auth().useEmulator('http://localhost:9099');
+}
+
 const uiConfig: FirebaseAuthProps['uiConfig'] = {
   signInFlow: 'popup',
-  signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID],
+  signInOptions: [
+    {
+      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      requireDisplayName: false,
+    },
+  ],
   callbacks: {
     signInSuccessWithAuthResult: () => false,
   },
@@ -37,6 +46,13 @@ function useAuthUser() {
       .auth()
       .onAuthStateChanged((user) => {
         setUser(user);
+        user?.getIdToken(true).then((idToken) => {
+          const { uid } = user;
+          console.log({
+            uid,
+            idToken,
+          });
+        });
       });
     return () => unregisterAuthObserver();
   }, []);
