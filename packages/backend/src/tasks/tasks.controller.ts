@@ -29,10 +29,10 @@ import {
   ApiOkResponse,
   ApiTags,
   ApiUnauthorizedResponse,
-  getSchemaPath,
 } from '@nestjs/swagger';
 import { TaskDto } from './dto/task.dto';
 import { PaginatedDto } from '../paginated/dto/paginated.dto';
+import { ApiPaginatedResponse } from '../paginated/decorators/api-paginated-response';
 
 @ApiTags('tasks')
 @ApiExtraModels(PaginatedDto)
@@ -52,21 +52,7 @@ export class TasksController {
   }
 
   @Get()
-  @ApiOkResponse({
-    schema: {
-      allOf: [
-        { $ref: getSchemaPath(PaginatedDto) },
-        {
-          properties: {
-            data: {
-              type: 'array',
-              items: { $ref: getSchemaPath(TaskDto) },
-            },
-          },
-        },
-      ],
-    },
-  })
+  @ApiPaginatedResponse(TaskDto)
   public async findAll(
     @Req() req: AuthenticatedRequest,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
