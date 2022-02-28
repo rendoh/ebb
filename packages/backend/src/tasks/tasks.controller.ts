@@ -28,6 +28,7 @@ import {
   ApiForbiddenResponse,
   ApiNoContentResponse,
   ApiOkResponse,
+  ApiQuery,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -54,6 +55,16 @@ export class TasksController {
   }
 
   @Get()
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+  })
   @ApiPaginatedResponse(TaskDto)
   public async findAll(
     @Req() req: AuthenticatedRequest,
