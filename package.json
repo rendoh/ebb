@@ -9,6 +9,7 @@
     "packages/frontend"
   ],
   "devDependencies": {
+    "@faker-js/faker": "^6.0.0-alpha.7",
     "firebase-tools": "^10.2.1"
   },
   "dependencies": {
