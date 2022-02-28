@@ -22,6 +22,7 @@ import type { AuthenticatedRequest } from 'express';
 import { TaskPolicyGuard } from './guards/task-policy.guard';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiExtraModels,
   ApiForbiddenResponse,
@@ -37,6 +38,7 @@ import { ApiPaginatedResponse } from '../paginated/decorators/api-paginated-resp
 @ApiTags('tasks')
 @ApiExtraModels(PaginatedDto)
 @ApiUnauthorizedResponse()
+@ApiBearerAuth()
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
