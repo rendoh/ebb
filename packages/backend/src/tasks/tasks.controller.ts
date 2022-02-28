@@ -20,16 +20,29 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import type { AuthenticatedRequest } from 'express';
 import { TaskPolicyGuard } from './guards/task-policy.guard';
+import {
+  ApiBadRequestResponse,
+  ApiCreatedResponse,
+  ApiExtraModels,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
+import { TaskDto } from './dto/task.dto';
 
+@ApiTags('tasks')
+@ApiExtraModels(PaginatedDto)
+@ApiUnauthorizedResponse()
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Post()
+  @ApiCreatedResponse({ type: TaskDto })
+  @ApiBadRequestResponse()
   public async create(
     @Req() req: AuthenticatedRequest,
     @Body() createTaskDto: CreateTaskDto,
-  ) {
+  ): Promise<TaskDto> {
     return this.tasksService.create(req.user.uid, createTaskDto);
   }
 
