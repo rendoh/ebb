@@ -10,6 +10,10 @@ import {
   UseGuards,
   HttpCode,
   HttpStatus,
+  Query,
+  ParseIntPipe,
+  ParseUUIDPipe,
+  DefaultValuePipe,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -30,20 +34,24 @@ export class TasksController {
   }
 
   @Get()
-  public async findAll(@Req() req: AuthenticatedRequest) {
-    return this.tasksService.findAll(req.user.uid);
+  public async findAll(
+    @Req() req: AuthenticatedRequest,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+  ) {
+    return this.tasksService.findAll(req.user.uid, { page, limit });
   }
 
   @Get(':id')
   @UseGuards(TaskPolicyGuard)
-  public async findOne(@Param('id') id: string) {
+  public async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.tasksService.findOne(id);
   }
 
   @Patch(':id')
   @UseGuards(TaskPolicyGuard)
   public async update(
-    @Param('id') id: string,
+    @Param('id', ParseUUIDPipe) id: string,
     @Body() updateTaskDto: UpdateTaskDto,
   ) {
     return this.tasksService.update(id, updateTaskDto);
@@ -52,7 +60,7 @@ export class TasksController {
   @Delete(':id')
   @UseGuards(TaskPolicyGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async remove(@Param('id') id: string) {
+  public async remove(@Param('id', ParseUUIDPipe) id: string) {
     await this.tasksService.remove(id);
     return null;
   }

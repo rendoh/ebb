@@ -17,12 +17,31 @@ export class TasksService {
     });
   }
 
-  public findAll(uid: string) {
-    return this.prisma.task.findMany({
-      where: {
-        uid,
-      },
-    });
+  public async findAll(
+    uid: string,
+    { page, limit }: { page: number; limit: number },
+  ) {
+    const [count, tasks] = await this.prisma.$transaction([
+      this.prisma.task.count({
+        where: {
+          uid,
+        },
+      }),
+      this.prisma.task.findMany({
+        skip: (page - 1) * limit,
+        take: limit,
+        where: {
+          uid,
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+      }),
+    ]);
+    return {
+      data: tasks,
+      total: count,
+    };
   }
 
   public async findOne(id: string) {
