@@ -24,10 +24,15 @@ import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiExtraModels,
+  ApiForbiddenResponse,
+  ApiNoContentResponse,
+  ApiOkResponse,
   ApiTags,
   ApiUnauthorizedResponse,
+  getSchemaPath,
 } from '@nestjs/swagger';
 import { TaskDto } from './dto/task.dto';
+import { PaginatedDto } from '../paginated/dto/paginated.dto';
 
 @ApiTags('tasks')
 @ApiExtraModels(PaginatedDto)
@@ -47,21 +52,40 @@ export class TasksController {
   }
 
   @Get()
+  @ApiOkResponse({
+    schema: {
+      allOf: [
+        { $ref: getSchemaPath(PaginatedDto) },
+        {
+          properties: {
+            data: {
+              type: 'array',
+              items: { $ref: getSchemaPath(TaskDto) },
+            },
+          },
+        },
+      ],
+    },
+  })
   public async findAll(
     @Req() req: AuthenticatedRequest,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
-  ) {
+  ): Promise<PaginatedDto<TaskDto>> {
     return this.tasksService.findAll(req.user.uid, { page, limit });
   }
 
   @Get(':id')
+  @ApiOkResponse()
+  @ApiForbiddenResponse()
   @UseGuards(TaskPolicyGuard)
   public async findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.tasksService.findOne(id);
   }
 
   @Patch(':id')
+  @ApiOkResponse()
+  @ApiForbiddenResponse()
   @UseGuards(TaskPolicyGuard)
   public async update(
     @Param('id', ParseUUIDPipe) id: string,
@@ -71,6 +95,8 @@ export class TasksController {
   }
 
   @Delete(':id')
+  @ApiNoContentResponse()
+  @ApiForbiddenResponse()
   @UseGuards(TaskPolicyGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   public async remove(@Param('id', ParseUUIDPipe) id: string) {
