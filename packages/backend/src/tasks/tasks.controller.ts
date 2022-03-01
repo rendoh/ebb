@@ -11,9 +11,7 @@ import {
   HttpCode,
   HttpStatus,
   Query,
-  ParseIntPipe,
   ParseUUIDPipe,
-  DefaultValuePipe,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -28,13 +26,13 @@ import {
   ApiForbiddenResponse,
   ApiNoContentResponse,
   ApiOkResponse,
-  ApiQuery,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { TaskDto } from './dto/task.dto';
-import { PaginatedDto } from '../paginated/dto/paginated.dto';
-import { ApiPaginatedResponse } from '../paginated/decorators/api-paginated-response';
+import { PaginatedDto } from '../pagination/dto/paginated.dto';
+import { ApiPaginatedResponse } from '../pagination/decorators/api-paginated-response';
+import { PaginationQueryDto } from '../pagination/dto/pagination-query.dto';
 
 @ApiTags('tasks')
 @ApiExtraModels(PaginatedDto)
@@ -55,21 +53,10 @@ export class TasksController {
   }
 
   @Get()
-  @ApiQuery({
-    name: 'page',
-    required: false,
-    type: Number,
-  })
-  @ApiQuery({
-    name: 'limit',
-    required: false,
-    type: Number,
-  })
   @ApiPaginatedResponse(TaskDto)
   public async findAll(
     @Req() req: AuthenticatedRequest,
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @Query() { page, limit }: PaginationQueryDto,
   ): Promise<PaginatedDto<TaskDto>> {
     return this.tasksService.findAll(req.user.uid, { page, limit });
   }

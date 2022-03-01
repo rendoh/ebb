@@ -23,7 +23,10 @@ import { ConfigModule } from '@nestjs/config';
     },
     {
       provide: APP_PIPE,
-      useValue: new ValidationPipe({ whitelist: true }),
+      useValue: new ValidationPipe({
+        whitelist: true,
+        transform: true,
+      }),
     },
     {
       provide: APP_FILTER,
