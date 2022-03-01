@@ -19,10 +19,8 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 import type { AuthenticatedRequest } from 'express';
 import { TaskPolicyGuard } from './guards/task-policy.guard';
 import {
-  ApiBadRequestResponse,
   ApiBearerAuth,
   ApiCreatedResponse,
-  ApiExtraModels,
   ApiForbiddenResponse,
   ApiNoContentResponse,
   ApiOkResponse,
@@ -33,9 +31,9 @@ import { TaskDto } from './dto/task.dto';
 import { PaginatedDto } from '../pagination/dto/paginated.dto';
 import { ApiPaginatedResponse } from '../pagination/decorators/api-paginated-response';
 import { PaginationQueryDto } from '../pagination/dto/pagination-query.dto';
+import { ApiValidationErrorResponse } from '../validation-error/decorators/api-validation-error-response';
 
 @ApiTags('tasks')
-@ApiExtraModels(PaginatedDto)
 @ApiUnauthorizedResponse()
 @ApiBearerAuth()
 @Controller('tasks')
@@ -44,7 +42,7 @@ export class TasksController {
 
   @Post()
   @ApiCreatedResponse({ type: TaskDto })
-  @ApiBadRequestResponse()
+  @ApiValidationErrorResponse()
   public async create(
     @Req() req: AuthenticatedRequest,
     @Body() createTaskDto: CreateTaskDto,
@@ -54,6 +52,7 @@ export class TasksController {
 
   @Get()
   @ApiPaginatedResponse(TaskDto)
+  @ApiValidationErrorResponse()
   public async findAll(
     @Req() req: AuthenticatedRequest,
     @Query() { page, limit }: PaginationQueryDto,
@@ -73,6 +72,7 @@ export class TasksController {
   @ApiOkResponse()
   @ApiForbiddenResponse()
   @UseGuards(TaskPolicyGuard)
+  @ApiValidationErrorResponse()
   public async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateTaskDto: UpdateTaskDto,

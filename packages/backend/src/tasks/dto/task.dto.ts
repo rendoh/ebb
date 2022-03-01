@@ -1,8 +1,8 @@
 export class TaskDto {
-  id!: string;
-  title!: string;
-  content!: string;
-  createdAt!: Date;
-  updatedAt!: Date;
-  archived!: boolean;
+  readonly id!: string;
+  readonly title!: string;
+  readonly content!: string;
+  readonly createdAt!: Date;
+  readonly updatedAt!: Date;
+  readonly archived!: boolean;
 }
