@@ -21,8 +21,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "dotenv -e .env.test -- jest --config ./test/jest-e2e.json",
     "pretest:e2e": "dotenv -e .env.test -- prisma migrate reset --force",
-    "pregenerate": "rimraf ./lib/client",
-    "generate": "docker run --rm -v \"${PWD}:/local\" openapitools/openapi-generator-cli generate -i /local/openapi.json -g typescript-axios -o /local/lib/client --api-package api --model-package model --additional-properties withSeparateModelsAndApi=true"
+    "pregenerate": "rimraf ./lib/client"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
