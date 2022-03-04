@@ -55,28 +55,34 @@ export class TasksController {
   @ApiValidationErrorResponse()
   public async findAll(
     @Req() req: AuthenticatedRequest,
-    @Query() { page, limit }: PaginationQueryDto,
+    @Query() { page = 1, limit = 10 }: PaginationQueryDto,
   ): Promise<PaginatedDto<TaskDto>> {
     return this.tasksService.findAll(req.user.uid, { page, limit });
   }
 
   @Get(':id')
-  @ApiOkResponse()
+  @ApiOkResponse({
+    type: TaskDto,
+  })
   @ApiForbiddenResponse()
   @UseGuards(TaskPolicyGuard)
-  public async findOne(@Param('id', ParseUUIDPipe) id: string) {
+  public async findOne(
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<TaskDto> {
     return this.tasksService.findOne(id);
   }
 
   @Patch(':id')
-  @ApiOkResponse()
+  @ApiOkResponse({
+    type: TaskDto,
+  })
   @ApiForbiddenResponse()
   @UseGuards(TaskPolicyGuard)
   @ApiValidationErrorResponse()
   public async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateTaskDto: UpdateTaskDto,
-  ) {
+  ): Promise<TaskDto> {
     return this.tasksService.update(id, updateTaskDto);
   }
 

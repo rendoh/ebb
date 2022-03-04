@@ -6,12 +6,12 @@ export class PaginationQueryDto {
   @Min(1)
   @IsOptional()
   @Type(() => Number)
-  readonly page?: number = 1;
+  readonly page?: number;
 
   @IsInt()
   @Min(1)
   @Max(100)
   @IsOptional()
   @Type(() => Number)
-  readonly limit?: number = 10;
+  readonly limit?: number;
 }

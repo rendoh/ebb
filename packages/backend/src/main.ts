@@ -6,7 +6,15 @@ import { PaginationQueryDto } from './pagination/dto/pagination-query.dto';
 import { ValidationErrorDto } from './validation-error/dto/validation-error.dto';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    cors: {
+      /**
+       * TODO:
+       * 環境変数にする
+       */
+      origin: '*',
+    },
+  });
 
   const config = new DocumentBuilder()
     .addBearerAuth()
