@@ -8,6 +8,11 @@
     "packages/backend",
     "packages/frontend"
   ],
+  "scripts": {
+    "dev:emulator": "firebase emulators:start --project demo-ebb --only auth",
+    "dev:backend": "npm run start:dev -w packages/backend",
+    "dev:frontend": "npm run dev -w packages/frontend"
+  },
   "devDependencies": {
     "@faker-js/faker": "^6.0.0-alpha.7",
     "firebase-tools": "^10.2.1"

@@ -6,13 +6,11 @@
 
 ## Development
 
-WIP
-
 ```
 cp .env.example .env
 npm i
 npx -w packages/backend prisma migrate dev # migrate db schemas
-npx firebase emulators:start --project demo-ebb --only auth # start firebase emulator
-npm run start:dev -w packages/backend # start api server
-npm run dev -w packages/frontend # start vite server
+npx run dev:emulator # start firebase emulator
+npm run dev:backend # start api dev
+npm run dev:frontend # start vite dev
 ```
