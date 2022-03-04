@@ -1,3 +1,22 @@
+# Ebb API
+
+NestJS
+
+## TODO
+
+- [x] npm workspaces 使ってみる
+  - [x] パッケージ間の依存関係どうなるのか確認
+- [x] Prisma（と、NestJS も） 久々に試す
+- [x] NestJS で Firebase Authentication を試す
+  - [x] Firebase Admin
+  - [x] Strategy
+  - [x] ローカルで Firebase Emulator 使ってみる
+- [ ] ユニットテストの書き方思い出す
+- [x] E2E テスト検証
+- [x] OpenAPI
+
+---
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
