@@ -4,6 +4,7 @@ import {
   Props as FirebaseAuthProps,
   StyledFirebaseAuth,
 } from 'react-firebaseui';
+import Progress from '../../core/ui/Progress';
 import { useAuthUser } from './useAuthUser';
 
 type AuthGuardProps = {
@@ -27,7 +28,7 @@ const AuthGuard: VFC<AuthGuardProps> = ({ children }) => {
   const user = useAuthUser();
 
   if (user === false) {
-    return <div>Loading...</div>; // TODO: spinner
+    return <Progress />;
   }
 
   if (!user) {
