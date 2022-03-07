@@ -12,6 +12,7 @@ const TextAreaField = forwardRef<HTMLTextAreaElement, TextAreaFieldProps>(
     <Field label={label} htmlFor={htmlFor} error={error}>
       <TextArea
         {...props}
+        name={name}
         ref={ref}
         id={id}
         color={error ? 'error' : 'normal'}

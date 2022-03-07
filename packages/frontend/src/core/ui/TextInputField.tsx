@@ -12,6 +12,7 @@ const TextInputField = forwardRef<HTMLInputElement, TextInputFieldProps>(
     <Field label={label} htmlFor={htmlFor} error={error}>
       <TextInput
         {...props}
+        name={name}
         ref={ref}
         id={id}
         color={error ? 'error' : 'normal'}
