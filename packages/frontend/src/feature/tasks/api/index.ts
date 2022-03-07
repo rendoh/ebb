@@ -8,23 +8,28 @@ import type {
 import { client } from '../../../core/api/client';
 
 export async function createTask(createTaskDto: CreateTaskDto) {
-  return client.post<TaskDto>('/task', createTaskDto);
+  const { data } = await client.post<TaskDto>('/tasks', createTaskDto);
+  return data;
 }
 
 export async function findAllTasks(params?: PaginationQueryDto) {
-  return client.get<PaginatedResponseOfTaskDto>('/tasks', {
+  const { data } = await client.get<PaginatedResponseOfTaskDto>('/tasks', {
     params,
   });
+  return data;
 }
 
 export async function findOneTask(id: string) {
-  return client.get<TaskDto>(`/tasks/${id}`);
+  const { data } = await client.get<TaskDto>(`/tasks/${id}`);
+  return data;
 }
 
 export async function updateTask(updateTaskDto: UpdateTaskDto) {
-  return client.patch<TaskDto>('/task', updateTaskDto);
+  const { data } = await client.patch<TaskDto>('/tasks', updateTaskDto);
+  return data;
 }
 
 export async function removeTask(id: string) {
-  return client.delete<null>(`/tasks/${id}`);
+  const { data } = await client.delete<null>(`/tasks/${id}`);
+  return data;
 }
