@@ -1,10 +1,16 @@
 import { StrictMode, VFC } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import AuthGuard from '../feature/auth/AuthGuard';
+import Home from './routes/Home';
+
+const queryClient = new QueryClient();
 
 const App: VFC = () => (
   <StrictMode>
     <AuthGuard>
-      <p>Hello, world!</p>
+      <QueryClientProvider client={queryClient}>
+        <Home />
+      </QueryClientProvider>
     </AuthGuard>
   </StrictMode>
 );
