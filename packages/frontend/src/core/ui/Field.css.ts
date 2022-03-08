@@ -10,7 +10,7 @@ export const field = style({
 });
 
 export const label = style({
-  marginBottom: 4,
+  marginBottom: 6,
   fontSize: 14,
   display: 'block',
   width: 'fit-content',

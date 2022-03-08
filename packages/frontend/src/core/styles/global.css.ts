@@ -8,3 +8,18 @@ globalStyle('body', {
   background: globalVars.colors.background,
   fontSize: 16,
 });
+
+globalStyle('button', {
+  cursor: 'pointer',
+});
+
+globalStyle(
+  '*:where(:not(iframe, canvas, img, svg, video):not(svg *, symbol *))',
+  {
+    outline: 'revert',
+  },
+);
+
+globalStyle('::placeholder', {
+  color: '#ccc',
+});

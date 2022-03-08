@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CreateTaskDto } from 'ebb-backend';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { createTask } from '../api';
@@ -10,6 +10,7 @@ export function useCreateTaskForm() {
   const {
     register,
     handleSubmit,
+    setFocus,
     formState: { errors },
   } = useForm<CreateTaskFormValues>({
     resolver: zodResolver(createTaskFormValuesSchema),
@@ -25,6 +26,12 @@ export function useCreateTaskForm() {
     },
     [mutate],
   );
+
+  useEffect(() => {
+    setFocus('title');
+    // 初回マウント時のみ、titleフィールドにフォーカスする
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return {
     register,

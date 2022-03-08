@@ -1,5 +1,6 @@
 import { keyframes, style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
+import { globalVars } from '../styles/globalTheme.css';
 
 export const size = 100;
 export const cx = size / 2;
@@ -39,7 +40,6 @@ const drawing = keyframes({
 
 export const circlePath = recipe({
   base: {
-    stroke: '#000',
     strokeWidth: 12,
     fill: 'none',
     strokeDasharray,
@@ -48,15 +48,12 @@ export const circlePath = recipe({
   },
   variants: {
     color: {
-      red: {
-        stroke: '#e85858',
-      },
-      blue: {
-        stroke: '#58a0e8',
+      primary: {
+        stroke: globalVars.colors.primary,
       },
     },
   },
   defaultVariants: {
-    color: 'red',
+    color: 'primary',
   },
 });

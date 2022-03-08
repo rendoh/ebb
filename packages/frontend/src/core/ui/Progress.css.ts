@@ -1,4 +1,5 @@
 import { globalStyle, keyframes, style } from '@vanilla-extract/css';
+import { globalVars } from '../styles/globalTheme.css';
 
 const firstBarTransition = keyframes({
   '0%': {
@@ -25,7 +26,7 @@ export const progress = style({
   left: 0,
   width: '100%',
   height: 5,
-  background: '#eee',
+  background: globalVars.colors.primaryLight,
   overflow: 'hidden',
   '::before': {
     animation: `${firstBarTransition} 3s cubic-bezier(0.5, 1, 0.89, 1) infinite`,
@@ -40,7 +41,7 @@ globalStyle(`${progress}::before, ${progress}::after`, {
   display: 'block',
   width: '100%',
   height: '100%',
-  background: '#e85858',
+  background: globalVars.colors.primary,
   position: 'absolute',
   top: 0,
   left: 0,

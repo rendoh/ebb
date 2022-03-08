@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css';
 
 export const submitButton = style({
-  marginTop: 8,
+  marginTop: 16,
 });

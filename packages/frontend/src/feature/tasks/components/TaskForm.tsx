@@ -12,15 +12,17 @@ const TaskForm: VFC = () => {
     <form onSubmit={handleSubmit}>
       <TextInputField
         {...register('title')}
-        label="問題"
+        label="設問"
+        placeholder="戮力協心の意味は？"
         error={errors.title?.message}
       />
       <TextAreaField
         {...register('content')}
-        label="内容"
+        label="覚えたい内容"
+        placeholder="心をひとつにして力を合わせること"
         error={errors.content?.message}
       />
-      <Button className={styles.submitButton} type="submit">
+      <Button className={styles.submitButton} type="submit" submit>
         保存
       </Button>
     </form>
