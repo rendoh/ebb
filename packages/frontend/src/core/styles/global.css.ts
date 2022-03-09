@@ -23,3 +23,7 @@ globalStyle(
 globalStyle('::placeholder', {
   color: '#ccc',
 });
+
+globalStyle('textarea', {
+  resize: 'vertical',
+});
