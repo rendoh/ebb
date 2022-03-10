@@ -24,6 +24,7 @@ import {
   ApiForbiddenResponse,
   ApiNoContentResponse,
   ApiOkResponse,
+  ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -32,6 +33,7 @@ import { PaginatedDto } from '../pagination/dto/paginated.dto';
 import { ApiPaginatedResponse } from '../pagination/decorators/api-paginated-response';
 import { PaginationQueryDto } from '../pagination/dto/pagination-query.dto';
 import { ApiValidationErrorResponse } from '../validation-error/decorators/api-validation-error-response';
+import { CursorPaginationQueryDto } from '../pagination/dto/cursor-pagination-query.dto';
 
 @ApiTags('tasks')
 @ApiUnauthorizedResponse()
@@ -48,6 +50,21 @@ export class TasksController {
     @Body() createTaskDto: CreateTaskDto,
   ): Promise<TaskDto> {
     return this.tasksService.create(req.user.uid, createTaskDto);
+  }
+
+  @Get('todos')
+  @ApiOperation({
+    description: `
+      当日にチェックすべきTaskの一覧を返す
+    `,
+  })
+  @ApiPaginatedResponse(TaskDto)
+  @ApiValidationErrorResponse()
+  public async findTodos(
+    @Req() req: AuthenticatedRequest,
+    @Query() { cursor, limit = 10 }: CursorPaginationQueryDto,
+  ): Promise<PaginatedDto<TaskDto>> {
+    return this.tasksService.findTodos(req.user.uid, { cursor, limit });
   }
 
   @Get()
